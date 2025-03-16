@@ -1,0 +1,56 @@
+!SESSION 2025-03-12 18:12:10.382 -----------------------------------------------
+eclipse.buildId=Version 1.18.0
+java.version=21.0.3
+java.vendor=Eclipse Adoptium
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=es_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-03-12 18:12:16.620
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-03-12 18:12:16.622
+!MESSAGE Log4j2 initialized with config file C:\misa\mecatronics\Tharsis Computadora\HERC_2025\.metadata\.log4j2.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-03-12 18:12:19.102
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.core.jobs 2 2 2025-03-12 18:12:20.297
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: org.eclipse.ui.internal.Workbench$39 RUNNING
+	 at com.st.stm32cube.ide.mcu.productdb.MCUProductDbResources.getInstance(MCUProductDbResources.java:79)
+	 at com.st.stm32cube.common.ecosystemintegration.stinsider.core.TargetsInjector.initialize(TargetsInjector.java:57)
+	 at com.st.stm32cube.common.ecosystemintegration.stinsider.core.TargetsInjector.<init>(TargetsInjector.java:46)
+	 at java.base/jdk.internal.reflect.DirectConstructorHandleAccessor.newInstance(DirectConstructorHandleAccessor.java:62)
+	 at java.base/java.lang.reflect.Constructor.newInstanceWithCaller(Constructor.java:502)
+	 at java.base/java.lang.reflect.Constructor.newInstance(Constructor.java:486)
+	 at org.eclipse.core.internal.registry.osgi.RegistryStrategyOSGI.createExecutableExtension(RegistryStrategyOSGI.java:233)
+	 at org.eclipse.core.internal.registry.ExtensionRegistry.createExecutableExtension(ExtensionRegistry.java:987)
+	 at org.eclipse.core.internal.registry.ConfigurationElement.createExecutableExtension(ConfigurationElement.java:275)
+	 at org.eclipse.core.internal.registry.ConfigurationElementHandle.createExecutableExtension(ConfigurationElementHandle.java:65)
+	 at com.st.stm32cube.common.mx.registry.MxRegistry.loadTargetSelectorInjectorExtensions(MxRegistry.java:199)
+	 at com.st.stm32cube.common.mx.registry.MxRegistry.loadExtensions(MxRegistry.java:80)
+	 at com.st.stm32cube.common.mx.registry.MxRegistry.<init>(MxRegistry.java:73)
+	 at com.st.stm32cube.common.mx.registry.MxRegistry.getInstance(MxRegistry.java:40)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.<init>(CubeMxInstance.java:108)
+	 at com.st.stm32cube.common.mx.core.CubeMxInstance.getInstance(CubeMxInstance.java:91)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthAdapter.<init>(UserAuthAdapter.java:25)
+	 at com.st.stm32cube.common.mx.userauth.UserAuthProvider.getUserAuthAdapter(UserAuthProvider.java:16)
+	 at com.st.stm32cube.common.ecosystemintegration.ui.core.MCUEcoSystemIntegrationUiHelper.getUserAuth(MCUEcoSystemIntegrationUiHelper.java:100)
+	 at com.st.stm32cube.ide.mcu.userauth.UserAuthStartup.earlyStartup(UserAuthStartup.java:32)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.runEarlyStartup(EarlyStartupRunnable.java:79)
+	 at org.eclipse.ui.internal.EarlyStartupRunnable.run(EarlyStartupRunnable.java:55)
+	 at org.eclipse.core.runtime.SafeRunner.run(SafeRunner.java:47)
+	 at org.eclipse.ui.internal.Workbench$39.run(Workbench.java:2733)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
+
+!ENTRY org.eclipse.core.jobs 2 2 2025-03-12 18:12:20.298
+!MESSAGE Job found still running after platform shutdown.  Jobs should be canceled by the plugin that scheduled them during shutdown: com.st.stm32cube.ide.mcu.ide.startup.ProductDbLoad$1 RUNNING
+	 at java.xml/com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl.nextMatchingElementAfter(DeepNodeListImpl.java:195)
+	 at java.xml/com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl.item(DeepNodeListImpl.java:146)
+	 at java.xml/com.sun.org.apache.xerces.internal.dom.DeepNodeListImpl.getLength(DeepNodeListImpl.java:116)
+	 at com.st.stm32cube.ide.mcu.productdb.core.TargetsDefinitionFileParser.getBoards(TargetsDefinitionFileParser.java:279)
+	 at com.st.stm32cube.ide.mcu.productdb.core.TargetsDefinitionFileParser.parse(TargetsDefinitionFileParser.java:114)
+	 at com.st.stm32cube.ide.mcu.productdb.MCUProductDbResources.loadSupportedTargets(MCUProductDbResources.java:151)
+	 at com.st.stm32cube.ide.mcu.productdb.MCUProductDbResources.<init>(MCUProductDbResources.java:68)
+	 at com.st.stm32cube.ide.mcu.productdb.MCUProductDbResources.getInstance(MCUProductDbResources.java:80)
+	 at com.st.stm32cube.ide.mcu.ide.startup.ProductDbLoad$1.run(ProductDbLoad.java:31)
+	 at org.eclipse.core.internal.jobs.Worker.run(Worker.java:63)
