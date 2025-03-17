@@ -11,6 +11,6 @@ typedef struct {
 
 // Funciones ligadas a una instancia de PWM_Config
 void PWM_Init(PWM_Config *config);
-void PWM_SetDutyCycle(PWM_Config *config, uint8_t duty);
+void PWM_SetValue(PWM_Config *config, uint8_t duty);
 
 #endif

@@ -44,6 +44,13 @@ TIM_HandleTypeDef htim1;
 
 /* USER CODE BEGIN PV */
 
+// DEFINE GLOBAL CONFIG VARIABLES
+PWM_Config pwm = {
+		.htim1 = &htim1,
+		.channel = TIM_CHANNEL_3
+};
+
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -91,10 +98,8 @@ int main(void)
   MX_TIM1_Init();
   /* USER CODE BEGIN 2 */
 
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_3);
-  HAL_TIM_PWM_Start(&htim1, TIM_CHANNEL_4);
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_3, 2500);
-  __HAL_TIM_SET_COMPARE(&htim1, TIM_CHANNEL_4, 5000);
+  PWM_Init(&pwm);
+  PWM_SetValue(&pwm, 50);
   /* USER CODE END 2 */
 
   /* Infinite loop */
