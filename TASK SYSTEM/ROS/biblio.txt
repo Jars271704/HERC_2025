@@ -1,0 +1,16 @@
+https://www.youtube.com/watch?v=0BxVPCInS3M&list=PLE-BQwvVGf8HOvwXPgtDfWoxd4Cc6ghiP
+
+http://wiki.ros.org/es/ROS/Tutoriales/catkin/CreateWorkspace
+http://wiki.ros.org/es/ROS/Tutoriales/catkin/CreacionPaquete
+http://wiki.ros.org/es/ROS/Tutoriales/catkin/ConstruyendoPaquetes
+
+Las variables de entorno dependen de la Shell que se utilice, al trabajar con un workspace, debemos mantenernos en una misma Shell
+Primero ejecutando la configuración de variables de entorno de esa Shell workspaceSRC/devel/setup.bash
+source /opt/ros/noetic/setup.bash 	obligatorio para variables de entorno iniciales (incluido catkin)
+
+SEE SETUP 	cat ~/.bashrc
+
+
+echo $<var>
+
+ROS_PACKAGE_PATH
