@@ -18,16 +18,16 @@ namespace DriverMotor {
             uint8_t PIN_FORWARD;
             uint8_t PIN_BACKWARD;
         };
-        constexpr MOTOR FORWARD_LEFT =   {0,1,12,13};
-        constexpr MOTOR FORWARD_RIGHT =  {2,3,14,15};
+        extern MOTOR FORWARD_LEFT;
+        extern MOTOR FORWARD_RIGHT;
     }
 
     // Start Driver
     void start();
 
     // Control directo de motores
-    void setDuty(MOTORS::MOTOR motor, int duty);
+    void setDuty(MOTORS::MOTOR* motor, int duty);
 
-    void configMotor(MOTORS::MOTOR motor);
+    void configMotor(MOTORS::MOTOR* motor);
 
 }

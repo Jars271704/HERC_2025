@@ -1,33 +1,49 @@
-#include "DriverControl.h"
+#include <DriverControl.h>
+
+namespace DriverControl {
+    namespace CONTROLERS {
+        CONTROL FORWARD_LEFT = CONTROL(&DriverEncoder::ENCODERS::FORWARD_LEFT, &DriverMotor::MOTORS::FORWARD_LEFT, 40.0, -12.0);
+    }
+}
 
 void DriverControl::start()
 {
+    // De momento no es necesaria
 }
 
-float DriverControl::update(CONTROLERS::CONTROL* control, float error)
+void DriverControl::update(CONTROLERS::CONTROL *control)
 {
-    // Definir el periodo de muestreo en segundos
-    const float T = 0.02f;
+    // Funcion de Loop que se llama con setpoint previamente definido en control
 
-    control->integral += error* T;
-
-    // Calcular la salida del controlador PI
-    float output = control->KP * error + control->KI * control->integral;
-
-    // Aplicar anti-windup limitando solo la integral si hay saturación
-    if (output > 1.0f) {
-        output = 1.0f;
-        control->integral -= error * T;  // Evitar acumulación excesiva
-    } else if (output < -1.0f) {
-        output = -1.0f;
-        control->integral -= error * T;
+    // Proteger de set points muy bajos
+    if(abs(control->set_point) < 0.5f) {
+        DriverMotor::setDuty(control->motor, 0);
+        control->encoder->MODE_FORWARD = true;
+        Serial.println("SET_POINT BAJO");
+        Serial.println("----------------------------------");
     }
-
-    // Guardar el error actual para la próxima iteración
-    control->previous_error = error;
-
-    // Actualizar la salida del controlador
-    control->control_output = output;
-
-    return output;
+    else {
+        float speed_Rad = DriverEncoder::getVelocity(control->encoder) * PI * 2.0f;
+        if(control->encoder->MODE_FORWARD == false) speed_Rad *= -1;
+        float error = control->set_point - speed_Rad;
+        float output = control->KP * error + control->KI * control->previous_error + control->previous_output;
+        
+        if (output > DriverMotor::CONFIG::RESOLUTION_MAX) output = DriverMotor::CONFIG::RESOLUTION_MAX;
+        if (output < -DriverMotor::CONFIG::RESOLUTION_MAX) output = -DriverMotor::CONFIG::RESOLUTION_MAX;
+    
+        // Actualiza valores previous
+        control->previous_output = output;
+        control->previous_error = error;
+       
+        // Escribir la salida en el motor, y actualizar el modo del encoder
+        DriverMotor::setDuty(control->motor, output);
+        control->encoder->MODE_FORWARD = (output >= 0);
+    
+        // Codigo de depuracion
+        Serial.println(control->encoder->MODE_FORWARD);
+        Serial.println(control->previous_error);
+        Serial.println(speed_Rad);
+        Serial.println(output);
+        Serial.println("----------------------------------");
+    }
 }

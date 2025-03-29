@@ -19,11 +19,11 @@ float DriverEncoder::getVelocity(ENCODERS::ENCODER *encoder)
     int16_t dif_encoder = 0;
     if(encoder->MODE_FORWARD) {
         if(encoder->previous_encoder_value < encoder_value) dif_encoder = encoder_value - encoder->previous_encoder_value;
-        else dif_encoder = encoder_value + (CONFIG::MAX_COUNTER - encoder->previous_encoder_value);
+        else if(encoder->previous_encoder_value > encoder_value) dif_encoder = encoder_value + (CONFIG::MAX_COUNTER - encoder->previous_encoder_value);
     }
     else {
         if(encoder->previous_encoder_value > encoder_value) dif_encoder = encoder->previous_encoder_value - encoder_value;
-        else dif_encoder = encoder->previous_encoder_value + (CONFIG::MAX_COUNTER - encoder_value);
+        else if(encoder->previous_encoder_value < encoder_value) dif_encoder = encoder->previous_encoder_value + (CONFIG::MAX_COUNTER - encoder_value);
     }
     uint32_t time_ = millis();
     uint32_t dif_time = time_ - encoder->previous_time;
