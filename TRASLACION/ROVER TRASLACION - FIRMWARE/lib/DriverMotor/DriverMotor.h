@@ -18,8 +18,9 @@ namespace DriverMotor {
             uint8_t PIN_FORWARD;
             uint8_t PIN_BACKWARD;
         };
-        extern MOTOR FORWARD_LEFT;
-        extern MOTOR FORWARD_RIGHT;
+        extern MOTOR FORWARD;
+        extern MOTOR MIDDLE;
+        extern MOTOR BACKWARD;
     }
 
     // Start Driver

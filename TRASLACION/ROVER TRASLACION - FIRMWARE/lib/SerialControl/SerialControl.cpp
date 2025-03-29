@@ -9,25 +9,30 @@ void SerialControl::start()
     Serial.begin(CONFIG::SERIAL_RATE);
 
     // Estado Inicial de los motores
-    DriverMotor::setDuty(&DriverMotor::MOTORS::FORWARD_LEFT, 0);
-    DriverEncoder::ENCODERS::FORWARD_LEFT.MODE_FORWARD = true;
-    DriverControl::CONTROLERS::FORWARD_LEFT.set_point = 0.0f;
+    DriverMotor::setDuty(&DriverMotor::MOTORS::FORWARD, 0);
+    DriverEncoder::ENCODERS::FORWARD.MODE_FORWARD = true;
+    DriverControl::CONTROLERS::FORWARD.set_point = 0.0f;
+    DriverMotor::setDuty(&DriverMotor::MOTORS::MIDDLE, 0);
+    DriverEncoder::ENCODERS::MIDDLE.MODE_FORWARD = true;
+    DriverControl::CONTROLERS::MIDDLE.set_point = 0.0f;
 }
 
 void SerialControl::loop()
 {
     // Esperar de Serial Wait el ratio y la speed
-    float ratio = 0; float speed_rad = 0;
-    if(waitSerial(&ratio, &speed_rad)) {
+    float speed_forward; float speed_middle; float speed_backward;
+    if(waitSerial(&speed_forward, &speed_middle, &speed_backward)) {
         // Cambiar setpoints
-        DriverControl::CONTROLERS::FORWARD_LEFT.set_point = speed_rad;
+        DriverControl::CONTROLERS::FORWARD.set_point = speed_forward;
+        DriverControl::CONTROLERS::MIDDLE.set_point = speed_middle;
         // Recibir las velocidades de los 6 motores
     }
     // Update Controlers
-    DriverControl::update(&DriverControl::CONTROLERS::FORWARD_LEFT);
+    DriverControl::update(&DriverControl::CONTROLERS::FORWARD);
+    DriverControl::update(&DriverControl::CONTROLERS::MIDDLE);
 }
 
-bool SerialControl::waitSerial(float* ratio, float* speed_rad)
+bool SerialControl::waitSerial(float* speed_forward, float* speed_middle, float* speed_backward)
 {
     // Esperar por comunicacion Serial
     // Crear el Buffer y variables
@@ -43,8 +48,8 @@ bool SerialControl::waitSerial(float* ratio, float* speed_rad)
             if (c == '\n' || c == '\r') {
                 if (index > 0) { // Solo procesar si hay datos en el buffer
                     inputBuffer[index] = '\0';
-                    int parsed = sscanf(inputBuffer, "%f %f", ratio, speed_rad);
-                    bandera_read = (parsed == 2);
+                    int parsed = sscanf(inputBuffer, "%f %f %f", speed_forward, speed_middle, speed_backward);
+                    bandera_read = (parsed == 3);
                     break; // Salir del bucle una vez leído el dato
                 }
             } else if (index < sizeof(inputBuffer) - 1) {

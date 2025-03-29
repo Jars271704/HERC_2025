@@ -2,7 +2,9 @@
 
 namespace DriverControl {
     namespace CONTROLERS {
-        CONTROL FORWARD_LEFT = CONTROL(&DriverEncoder::ENCODERS::FORWARD_LEFT, &DriverMotor::MOTORS::FORWARD_LEFT, 40.0, -12.0);
+        CONTROL FORWARD = CONTROL(&DriverEncoder::ENCODERS::FORWARD, &DriverMotor::MOTORS::FORWARD, 40.0, -12.0);
+        CONTROL MIDDLE = CONTROL(&DriverEncoder::ENCODERS::MIDDLE, &DriverMotor::MOTORS::MIDDLE, 40.0, -12.0);
+        CONTROL BACKWARD = CONTROL(&DriverEncoder::ENCODERS::BACKWARD, &DriverMotor::MOTORS::BACKWARD, 40.0, -12.0);
     }
 }
 
@@ -19,8 +21,9 @@ void DriverControl::update(CONTROLERS::CONTROL *control)
     if(abs(control->set_point) < 0.5f) {
         DriverMotor::setDuty(control->motor, 0);
         control->encoder->MODE_FORWARD = true;
-        Serial.println("SET_POINT BAJO");
-        Serial.println("----------------------------------");
+        // Codigo de depuracion
+        //Serial.println("SET_POINT BAJO");
+        //Serial.println("----------------------------------");
     }
     else {
         float speed_Rad = DriverEncoder::getVelocity(control->encoder) * PI * 2.0f;
@@ -40,10 +43,10 @@ void DriverControl::update(CONTROLERS::CONTROL *control)
         control->encoder->MODE_FORWARD = (output >= 0);
     
         // Codigo de depuracion
-        Serial.println(control->encoder->MODE_FORWARD);
-        Serial.println(control->previous_error);
-        Serial.println(speed_Rad);
-        Serial.println(output);
-        Serial.println("----------------------------------");
+        //Serial.println(control->encoder->MODE_FORWARD);
+        //Serial.println(control->previous_error);
+        //Serial.println(speed_Rad);
+        //Serial.println(output);
+        //Serial.println("----------------------------------");
     }
 }

@@ -2,14 +2,17 @@
 
 namespace DriverMotor {
     namespace MOTORS {
-        MOTORS::MOTOR FORWARD_LEFT =   {0,1,12,13};
-        MOTORS::MOTOR FORWARD_RIGHT =  {2,3,14,15};
+        // Configuracion FORWARD MIDDLE BACKWARD 
+        MOTORS::MOTOR FORWARD =     {0,1,12,13};
+        MOTORS::MOTOR MIDDLE =      {2,3,14,15};
+        MOTORS::MOTOR BACKWARD =      {4,5,16,17};
     }
 }
 
 void DriverMotor::start()   {
-    configMotor(&MOTORS::FORWARD_LEFT);
-    configMotor(&MOTORS::FORWARD_RIGHT);
+    configMotor(&MOTORS::FORWARD);
+    configMotor(&MOTORS::MIDDLE);
+    configMotor(&MOTORS::BACKWARD);
 }
 
 void DriverMotor::setDuty(MOTORS::MOTOR* motor, int duty)

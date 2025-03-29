@@ -22,7 +22,10 @@ namespace DriverControl {
                 this->previous_error = 0; this-> previous_output = 0; this->set_point = 0;
             };
         };
-        extern CONTROL FORWARD_LEFT;
+        //extern CONTROL FORWARD_LEFT;
+        extern CONTROL FORWARD;
+        extern CONTROL MIDDLE;
+        extern CONTROL BACKWARD;
     }
 
     // Start Driver

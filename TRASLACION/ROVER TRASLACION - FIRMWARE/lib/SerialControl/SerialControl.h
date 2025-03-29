@@ -7,7 +7,7 @@ namespace SerialControl {
     // CONFIG
     enum CONFIG {
         SERIAL_RATE =   115200,
-        BUFFER_SIZE =   32,      // Numero de cifras significativas + "." + "-" + "\0" por 2 datos float
+        BUFFER_SIZE =   64,      // Numero de cifras significativas + "." + "-" + "\0" por 2 datos float
         TIME_QUANTUM =  20,
     };
 
@@ -16,6 +16,6 @@ namespace SerialControl {
 
     void loop();
 
-    bool waitSerial(float* ratio, float* speed_rad);
+    bool waitSerial(float* speed_forward, float* speed_middle, float* speed_backward);
 
 }

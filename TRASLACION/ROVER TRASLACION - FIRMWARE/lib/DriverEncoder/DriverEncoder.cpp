@@ -2,13 +2,19 @@
 
 namespace DriverEncoder {
     namespace ENCODERS {
-        ENCODER FORWARD_LEFT = ENCODER(PCNT_UNIT_0,4,5,0.24f);
+        //ENCODER FORWARD_LEFT = ENCODER(PCNT_UNIT_0,4,5,0.24f);
+        ENCODER FORWARD = ENCODER(PCNT_UNIT_0,4,5,0.24f);
+        ENCODER MIDDLE = ENCODER(PCNT_UNIT_1,21,22,0.24f);
+        ENCODER BACKWARD = ENCODER(PCNT_UNIT_2,25,26,0.24f);
     }
 }
 
 void DriverEncoder::start()
 {
-    configEncoder(&ENCODERS::FORWARD_LEFT);
+    //configEncoder(&ENCODERS::FORWARD_LEFT);
+    configEncoder(&ENCODERS::FORWARD);
+    configEncoder(&ENCODERS::MIDDLE);
+    configEncoder(&ENCODERS::BACKWARD);
 }
 
 

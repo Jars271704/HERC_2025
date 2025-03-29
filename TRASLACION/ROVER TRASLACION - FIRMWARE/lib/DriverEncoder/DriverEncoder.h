@@ -22,7 +22,10 @@ namespace DriverEncoder {
             ENCODER(pcnt_unit_t p, uint8_t pin_A, uint8_t pin_B, float encoder_fac) {
                 this->PCNT_UNIT = p; this->PIN_A = pin_A, this->PIN_B = pin_B, this->encoder_factor = encoder_fac;};
         };
-        extern ENCODER FORWARD_LEFT;
+        //extern ENCODER FORWARD_LEFT;
+        extern ENCODER FORWARD;
+        extern ENCODER MIDDLE;
+        extern ENCODER BACKWARD;
     }
 
     // Start Driver
