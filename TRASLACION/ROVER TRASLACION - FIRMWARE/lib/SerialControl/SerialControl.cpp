@@ -9,12 +9,15 @@ void SerialControl::start()
     Serial.begin(CONFIG::SERIAL_RATE);
 
     // Estado Inicial de los motores
-    DriverMotor::setDuty(&DriverMotor::MOTORS::FORWARD, 0);
-    DriverEncoder::ENCODERS::FORWARD.MODE_FORWARD = true;
-    DriverControl::CONTROLERS::FORWARD.set_point = 0.0f;
-    DriverMotor::setDuty(&DriverMotor::MOTORS::MIDDLE, 0);
-    DriverEncoder::ENCODERS::MIDDLE.MODE_FORWARD = true;
-    DriverControl::CONTROLERS::MIDDLE.set_point = 0.0f;
+    //DriverMotor::setDuty(&DriverMotor::MOTORS::FORWARD, 0);
+    //DriverEncoder::ENCODERS::FORWARD.MODE_FORWARD = true;
+    //DriverControl::CONTROLERS::FORWARD.set_point = 0.0f;
+    //DriverMotor::setDuty(&DriverMotor::MOTORS::MIDDLE, 0);
+    //DriverEncoder::ENCODERS::MIDDLE.MODE_FORWARD = true;
+    //DriverControl::CONTROLERS::MIDDLE.set_point = 0.0f;
+    DriverMotor::setDuty(&DriverMotor::MOTORS::BACKWARD, 0);
+    DriverEncoder::ENCODERS::BACKWARD.MODE_FORWARD = true;
+    DriverControl::CONTROLERS::BACKWARD.set_point = 0.0f;
 }
 
 void SerialControl::loop()
@@ -25,11 +28,13 @@ void SerialControl::loop()
         // Cambiar setpoints
         DriverControl::CONTROLERS::FORWARD.set_point = speed_forward;
         DriverControl::CONTROLERS::MIDDLE.set_point = speed_middle;
-        // Recibir las velocidades de los 6 motores
+        DriverControl::CONTROLERS::BACKWARD.set_point = speed_backward;
+        // Recibir las velocidades de los 3 motores por esp
     }
     // Update Controlers
     DriverControl::update(&DriverControl::CONTROLERS::FORWARD);
     DriverControl::update(&DriverControl::CONTROLERS::MIDDLE);
+    DriverControl::update(&DriverControl::CONTROLERS::BACKWARD);
 }
 
 bool SerialControl::waitSerial(float* speed_forward, float* speed_middle, float* speed_backward)

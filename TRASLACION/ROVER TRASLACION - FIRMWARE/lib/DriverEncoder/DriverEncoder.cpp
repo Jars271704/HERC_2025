@@ -20,22 +20,25 @@ void DriverEncoder::start()
 
 float DriverEncoder::getVelocity(ENCODERS::ENCODER *encoder)
 {
+    // El encoder es capaz de leer la velocidad, devolverla y almacenarla
+    // ENCODER DIF
     int16_t encoder_value;
     pcnt_get_counter_value(encoder->PCNT_UNIT, &encoder_value);
-    int16_t dif_encoder = 0;
-    if(encoder->MODE_FORWARD) {
-        if(encoder->previous_encoder_value < encoder_value) dif_encoder = encoder_value - encoder->previous_encoder_value;
-        else if(encoder->previous_encoder_value > encoder_value) dif_encoder = encoder_value + (CONFIG::MAX_COUNTER - encoder->previous_encoder_value);
-    }
-    else {
-        if(encoder->previous_encoder_value > encoder_value) dif_encoder = encoder->previous_encoder_value - encoder_value;
-        else if(encoder->previous_encoder_value < encoder_value) dif_encoder = encoder->previous_encoder_value + (CONFIG::MAX_COUNTER - encoder_value);
-    }
+    int dif_encoder = (int)encoder_value - (int)encoder->previous_encoder_value;
+    // TIME DIF
     uint32_t time_ = millis();
     uint32_t dif_time = time_ - encoder->previous_time;
+    // Si fuera de la cota, ha dado un salto de vuelta, retornar la velocidad anterior por sencillez, y actualizar valores
+    if(abs(dif_encoder) > 10000) {
+        encoder->previous_encoder_value = encoder_value;
+        encoder->previous_time = time_;
+        return encoder->speed;
+    }
 
+    // Cota de seguridad de salto de vuelta, si dentro de la cota, leer velocidad
     float speed = ((float)dif_encoder / (float)dif_time) * encoder->encoder_factor;
 
+    // Actualizar valores
     encoder->previous_encoder_value = encoder_value;
     encoder->previous_time = time_;
     encoder->speed = speed;

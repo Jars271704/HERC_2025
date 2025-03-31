@@ -20,14 +20,11 @@ void DriverControl::update(CONTROLERS::CONTROL *control)
     // Proteger de set points muy bajos
     if(abs(control->set_point) < 0.5f) {
         DriverMotor::setDuty(control->motor, 0);
-        control->encoder->MODE_FORWARD = true;
-        // Codigo de depuracion
-        //Serial.println("SET_POINT BAJO");
-        //Serial.println("----------------------------------");
     }
     else {
+        // Aniadir filtros de kalman
         float speed_Rad = DriverEncoder::getVelocity(control->encoder) * PI * 2.0f;
-        if(control->encoder->MODE_FORWARD == false) speed_Rad *= -1;
+
         float error = control->set_point - speed_Rad;
         float output = control->KP * error + control->KI * control->previous_error + control->previous_output;
         
@@ -38,15 +35,13 @@ void DriverControl::update(CONTROLERS::CONTROL *control)
         control->previous_output = output;
         control->previous_error = error;
        
-        // Escribir la salida en el motor, y actualizar el modo del encoder
+        // Escribir la salida en el motor
         DriverMotor::setDuty(control->motor, output);
-        control->encoder->MODE_FORWARD = (output >= 0);
-    
-        // Codigo de depuracion
-        //Serial.println(control->encoder->MODE_FORWARD);
-        //Serial.println(control->previous_error);
-        //Serial.println(speed_Rad);
+
+        // Codigo de Depuracion
+        //Serial.println(error);
         //Serial.println(output);
-        //Serial.println("----------------------------------");
+        //Serial.println("-----------------------------");
+    
     }
 }
